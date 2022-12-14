@@ -29,8 +29,12 @@ contract DelegationTest is DSTest {
         // LEVEL ATTACK //
         //////////////////
 
-        //...
-
+        address(ethernautDelegation).call(abi.encodePacked(uint256(1)));
+        ethernautDelegation.readSlot(0);
+        ethernautDelegation.readSlot(1);
+        address(ethernautDelegation).call(abi.encodePacked(uint256(2)));
+        ethernautDelegation.readSlot(2);
+        
         //////////////////////
         // LEVEL SUBMISSION //
         //////////////////////

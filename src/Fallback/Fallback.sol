@@ -34,10 +34,10 @@ contract Fallback {
     return contributions[msg.sender];
   }
 
+  // function selector 3ccfd60b  =>  withdraw()
   function withdraw() public onlyOwner {
     owner.transfer(address(this).balance);
   }
-
   
   fallback() external payable { // naming has switched to fallback
     require(msg.value > 0 && contributions[msg.sender] > 0, "tx must have value and msg.send must have made a contribution"); // Add message with require

