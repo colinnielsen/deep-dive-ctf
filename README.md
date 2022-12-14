@@ -1,5 +1,26 @@
 # ethernaut-x-foundry
 
+## Installation
+
+MAC 🍎:
+```bash
+curl -L https://foundry.paradigm.xyz | bash
+foundryup
+```
+
+WINDOWS 🖼️:
+1. Download [rust-init](https://win.rustup.rs/x86_64)
+2. run:
+```bash
+cargo install --git https://github.com/foundry-rs/foundry foundry-cli anvil --bins --locked
+```
+
+```bash
+git clone https://github.com/colinnielsen/deep-dive-ctf.git
+cd deep-dive-ctf
+forge install
+```
+
 ## Ethernaut puzzles solved & tested with foundry.
 
 **Ethernaut**
