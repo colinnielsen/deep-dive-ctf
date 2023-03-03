@@ -1,8 +1,8 @@
 pragma solidity ^0.8.10;
 
 import "ds-test/test.sol";
-import "../Recovery/RecoveryFactory.sol";
-import "../Ethernaut.sol";
+import "../src/Recovery/RecoveryFactory.sol";
+import "../src/Ethernaut.sol";
 import "./utils/vm.sol";
 
 contract RecoveryTest is DSTest {
@@ -25,7 +25,9 @@ contract RecoveryTest is DSTest {
         RecoveryFactory recoveryFactory = new RecoveryFactory();
         ethernaut.registerLevel(recoveryFactory);
         vm.startPrank(eoaAddress);
-        address levelAddress = ethernaut.createLevelInstance{value: 0.001 ether}(recoveryFactory);
+        address levelAddress = ethernaut.createLevelInstance{
+            value: 0.001 ether
+        }(recoveryFactory);
         Recovery ethernautRecovery = Recovery(payable(levelAddress));
 
         //////////////////
@@ -38,7 +40,9 @@ contract RecoveryTest is DSTest {
         // LEVEL SUBMISSION //
         //////////////////////
 
-        bool levelSuccessfullyPassed = ethernaut.submitLevelInstance(payable(levelAddress));
+        bool levelSuccessfullyPassed = ethernaut.submitLevelInstance(
+            payable(levelAddress)
+        );
         vm.stopPrank();
         assert(levelSuccessfullyPassed);
     }

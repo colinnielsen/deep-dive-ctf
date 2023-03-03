@@ -1,7 +1,7 @@
 pragma solidity ^0.8.10;
 
 import "ds-test/test.sol";
-import "../PuzzleWallet/PuzzleWalletFactory.sol";
+import "../src/PuzzleWallet/PuzzleWalletFactory.sol";
 import "./utils/vm.sol";
 
 contract PuzzleWalletTest is DSTest {
@@ -10,7 +10,10 @@ contract PuzzleWalletTest is DSTest {
 
     // Memory cannot hold dynamic byte arrays must be storage
     bytes[] depositData = [abi.encodeWithSignature("deposit()")];
-    bytes[] multicallData = [abi.encodeWithSignature("deposit()"), abi.encodeWithSignature("multicall(bytes[])", depositData)];
+    bytes[] multicallData = [
+        abi.encodeWithSignature("deposit()"),
+        abi.encodeWithSignature("multicall(bytes[])", depositData)
+    ];
 
     event IsTrue(bool answer);
 
@@ -25,18 +28,25 @@ contract PuzzleWalletTest is DSTest {
         /////////////////
 
         PuzzleWalletFactory puzzleWalletFactory = new PuzzleWalletFactory();
-        (address levelAddressProxy, address levelAddressWallet) = puzzleWalletFactory.createInstance{value: 1 ether}();
-        PuzzleProxy ethernautPuzzleProxy = PuzzleProxy(payable(levelAddressProxy));
-        PuzzleWallet ethernautPuzzleWallet = PuzzleWallet(payable(levelAddressWallet));
-        
+        (
+            address levelAddressProxy,
+            address levelAddressWallet
+        ) = puzzleWalletFactory.createInstance{value: 1 ether}();
+        PuzzleProxy ethernautPuzzleProxy = PuzzleProxy(
+            payable(levelAddressProxy)
+        );
+        PuzzleWallet ethernautPuzzleWallet = PuzzleWallet(
+            payable(levelAddressWallet)
+        );
+
         vm.startPrank(eoaAddress);
-        
+
         //////////////////
         // LEVEL ATTACK //
         //////////////////
 
         //...
-        
+
         //////////////////////
         // LEVEL SUBMISSION //
         //////////////////////

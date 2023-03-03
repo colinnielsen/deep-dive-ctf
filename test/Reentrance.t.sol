@@ -1,9 +1,9 @@
 pragma solidity ^0.8.10;
 
 import "ds-test/test.sol";
-import "../Reentrance/ReentranceHack.sol";
-import "../Reentrance/ReentranceFactory.sol";
-import "../Ethernaut.sol";
+import "../src/Reentrance/ReentranceHack.sol";
+import "../src/Reentrance/ReentranceFactory.sol";
+import "../src/Ethernaut.sol";
 import "./utils/vm.sol";
 
 contract ReentranceTest is DSTest {
@@ -26,7 +26,9 @@ contract ReentranceTest is DSTest {
         ReentranceFactory reentranceFactory = new ReentranceFactory();
         ethernaut.registerLevel(reentranceFactory);
         vm.startPrank(eoaAddress);
-        address levelAddress = ethernaut.createLevelInstance{value: 1 ether}(reentranceFactory);
+        address levelAddress = ethernaut.createLevelInstance{value: 1 ether}(
+            reentranceFactory
+        );
         Reentrance ethernautReentrance = Reentrance(payable(levelAddress));
 
         //////////////////
@@ -42,7 +44,9 @@ contract ReentranceTest is DSTest {
         // LEVEL SUBMISSION //
         //////////////////////
 
-        bool levelSuccessfullyPassed = ethernaut.submitLevelInstance(payable(levelAddress));
+        bool levelSuccessfullyPassed = ethernaut.submitLevelInstance(
+            payable(levelAddress)
+        );
         vm.stopPrank();
         assert(levelSuccessfullyPassed);
     }

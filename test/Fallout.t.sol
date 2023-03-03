@@ -1,48 +1,46 @@
 pragma solidity ^0.8.10;
 
 import "ds-test/test.sol";
-import "../King/KingHack.sol";
-import "../King/KingFactory.sol";
-import "../Ethernaut.sol";
+import "../src/Fallout/FalloutFactory.sol";
+import "../src/Ethernaut.sol";
 import "./utils/vm.sol";
 
-contract KingTest is DSTest {
+contract FalloutTest is DSTest {
     Vm vm = Vm(address(0x7109709ECfa91a80626fF3989D68f67F5b1DD12D));
     Ethernaut ethernaut;
     address eoaAddress = address(100);
 
     function setUp() public {
-        // Setup instance of the Ethernaut contract
+        // Setup instance of the Ethernaut contracts
         ethernaut = new Ethernaut();
         // Deal EOA address some ether
         vm.deal(eoaAddress, 5 ether);
     }
 
-    function testKingHack() public {
+    function testFalloutHack() public {
         /////////////////
         // LEVEL SETUP //
         /////////////////
 
-        KingFactory kingFactory = new KingFactory();
-        ethernaut.registerLevel(kingFactory);
+        FalloutFactory falloutFactory = new FalloutFactory();
+        ethernaut.registerLevel(falloutFactory);
         vm.startPrank(eoaAddress);
-        address levelAddress = ethernaut.createLevelInstance{value: 1 ether}(kingFactory);
-        King ethernautKing = King(payable(levelAddress));
+        address levelAddress = ethernaut.createLevelInstance(falloutFactory);
+        Fallout ethernautFallout = Fallout(payable(levelAddress));
 
         //////////////////
         // LEVEL ATTACK //
         //////////////////
 
-        // Create KingHack Contract
-        KingHack kingHack = new KingHack(payable(levelAddress));
-
-        //...
+        // ...
 
         //////////////////////
         // LEVEL SUBMISSION //
         //////////////////////
 
-        bool levelSuccessfullyPassed = ethernaut.submitLevelInstance(payable(levelAddress));
+        bool levelSuccessfullyPassed = ethernaut.submitLevelInstance(
+            payable(levelAddress)
+        );
         vm.stopPrank();
         assert(levelSuccessfullyPassed);
     }

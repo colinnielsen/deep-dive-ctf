@@ -1,9 +1,9 @@
 pragma solidity ^0.8.10;
 
 import "ds-test/test.sol";
-import "../Shop/ShopHack.sol";
-import "../Shop/ShopFactory.sol";
-import "../Ethernaut.sol";
+import "../src/Shop/ShopHack.sol";
+import "../src/Shop/ShopFactory.sol";
+import "../src/Ethernaut.sol";
 import "./utils/vm.sol";
 
 contract ShopTest is DSTest {
@@ -40,7 +40,9 @@ contract ShopTest is DSTest {
         // LEVEL SUBMISSION //
         //////////////////////
 
-        bool levelSuccessfullyPassed = ethernaut.submitLevelInstance(payable(levelAddress));
+        bool levelSuccessfullyPassed = ethernaut.submitLevelInstance(
+            payable(levelAddress)
+        );
         vm.stopPrank();
         assert(levelSuccessfullyPassed);
     }

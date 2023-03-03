@@ -1,8 +1,8 @@
 pragma solidity ^0.8.10;
 
 import "ds-test/test.sol";
-import "../Delegation/DelegationFactory.sol";
-import "../Ethernaut.sol";
+import "../src/Delegation/DelegationFactory.sol";
+import "../src/Ethernaut.sol";
 import "./utils/vm.sol";
 
 contract DelegationTest is DSTest {
@@ -34,12 +34,14 @@ contract DelegationTest is DSTest {
         ethernautDelegation.readSlot(1);
         address(ethernautDelegation).call(abi.encodePacked(uint256(2)));
         ethernautDelegation.readSlot(2);
-        
+
         //////////////////////
         // LEVEL SUBMISSION //
         //////////////////////
 
-        bool levelSuccessfullyPassed = ethernaut.submitLevelInstance(payable(levelAddress));
+        bool levelSuccessfullyPassed = ethernaut.submitLevelInstance(
+            payable(levelAddress)
+        );
         vm.stopPrank();
         assert(levelSuccessfullyPassed);
     }

@@ -1,29 +1,29 @@
 pragma solidity ^0.8.10;
 
 import "ds-test/test.sol";
-import "../Privacy/PrivacyFactory.sol";
-import "../Ethernaut.sol";
+import "../src/NaughtCoin/NaughtCoinFactory.sol";
+import "../src/Ethernaut.sol";
 import "./utils/vm.sol";
 
-contract PrivacyTest is DSTest {
+contract NaughtCoinTest is DSTest {
     Vm vm = Vm(address(0x7109709ECfa91a80626fF3989D68f67F5b1DD12D));
     Ethernaut ethernaut;
 
     function setUp() public {
-        // Setup instance of the Ethernaut contract
+        // Setup instance of the Ethernaut contracts
         ethernaut = new Ethernaut();
     }
 
-    function testPrivacyHack() public {
+    function testNaughtCoinHack() public {
         /////////////////
         // LEVEL SETUP //
         /////////////////
 
-        PrivacyFactory privacyFactory = new PrivacyFactory();
-        ethernaut.registerLevel(privacyFactory);
+        NaughtCoinFactory naughtCoinFactory = new NaughtCoinFactory();
+        ethernaut.registerLevel(naughtCoinFactory);
         vm.startPrank(tx.origin);
-        address levelAddress = ethernaut.createLevelInstance(privacyFactory);
-        Privacy ethernautPrivacy = Privacy(payable(levelAddress));
+        address levelAddress = ethernaut.createLevelInstance(naughtCoinFactory);
+        NaughtCoin ethernautNaughtCoin = NaughtCoin(payable(levelAddress));
 
         //////////////////
         // LEVEL ATTACK //
@@ -35,7 +35,9 @@ contract PrivacyTest is DSTest {
         // LEVEL SUBMISSION //
         //////////////////////
 
-        bool levelSuccessfullyPassed = ethernaut.submitLevelInstance(payable(levelAddress));
+        bool levelSuccessfullyPassed = ethernaut.submitLevelInstance(
+            payable(levelAddress)
+        );
         vm.stopPrank();
         assert(levelSuccessfullyPassed);
     }

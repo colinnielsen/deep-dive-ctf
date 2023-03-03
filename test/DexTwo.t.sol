@@ -1,9 +1,9 @@
 pragma solidity ^0.8.10;
 
 import "ds-test/test.sol";
-import "../DexTwo/DexTwoHack.sol";
-import "../DexTwo/DexTwoFactory.sol";
-import "../Ethernaut.sol";
+import "../src/DexTwo/DexTwoHack.sol";
+import "../src/DexTwo/DexTwoFactory.sol";
+import "../src/Ethernaut.sol";
 
 contract DexTwoTest is DSTest {
     Ethernaut ethernaut;
@@ -20,7 +20,9 @@ contract DexTwoTest is DSTest {
 
         DexTwoFactory dexTwoFactory = new DexTwoFactory();
         ethernaut.registerLevel(dexTwoFactory);
-        address levelAddress = ethernaut.createLevelInstance{value: 1 ether}(dexTwoFactory);
+        address levelAddress = ethernaut.createLevelInstance{value: 1 ether}(
+            dexTwoFactory
+        );
         DexTwo ethernautDexTwo = DexTwo(payable(levelAddress));
 
         //////////////////
@@ -29,10 +31,16 @@ contract DexTwoTest is DSTest {
 
         // Create DexTwoHack Contract
         DexTwoHack dexTwoHack = new DexTwoHack(ethernautDexTwo);
-        
+
         // give the attack contract the balance
-        IERC20(ethernautDexTwo.token1()).transfer(address(dexTwoHack), IERC20(ethernautDexTwo.token1()).balanceOf(address(this)));
-        IERC20(ethernautDexTwo.token2()).transfer(address(dexTwoHack), IERC20(ethernautDexTwo.token2()).balanceOf(address(this)));
+        IERC20(ethernautDexTwo.token1()).transfer(
+            address(dexTwoHack),
+            IERC20(ethernautDexTwo.token1()).balanceOf(address(this))
+        );
+        IERC20(ethernautDexTwo.token2()).transfer(
+            address(dexTwoHack),
+            IERC20(ethernautDexTwo.token2()).balanceOf(address(this))
+        );
 
         // Call the attack function
         dexTwoHack.attack();
@@ -41,7 +49,9 @@ contract DexTwoTest is DSTest {
         // LEVEL SUBMISSION //
         //////////////////////
 
-        bool levelSuccessfullyPassed = ethernaut.submitLevelInstance(payable(levelAddress));
+        bool levelSuccessfullyPassed = ethernaut.submitLevelInstance(
+            payable(levelAddress)
+        );
         assert(levelSuccessfullyPassed);
     }
 }

@@ -1,9 +1,9 @@
 pragma solidity ^0.8.10;
 
 import "ds-test/test.sol";
-import "../Elevator/ElevatorHack.sol";
-import "../Elevator/ElevatorFactory.sol";
-import "../Ethernaut.sol";
+import "../src/Elevator/ElevatorHack.sol";
+import "../src/Elevator/ElevatorFactory.sol";
+import "../src/Ethernaut.sol";
 
 contract ElevatorTest is DSTest {
     Ethernaut ethernaut;
@@ -33,12 +33,13 @@ contract ElevatorTest is DSTest {
         // Call the attack function
         elevatorHack.attack();
 
-
         //////////////////////
         // LEVEL SUBMISSION //
         //////////////////////
 
-        bool levelSuccessfullyPassed = ethernaut.submitLevelInstance(payable(levelAddress));
+        bool levelSuccessfullyPassed = ethernaut.submitLevelInstance(
+            payable(levelAddress)
+        );
         assert(levelSuccessfullyPassed);
     }
 }

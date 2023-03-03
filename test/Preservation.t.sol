@@ -1,9 +1,9 @@
 pragma solidity ^0.8.10;
 
 import "ds-test/test.sol";
-import "../Preservation/PreservationHack.sol";
-import "../Preservation/PreservationFactory.sol";
-import "../Ethernaut.sol";
+import "../src/Preservation/PreservationHack.sol";
+import "../src/Preservation/PreservationFactory.sol";
+import "../src/Ethernaut.sol";
 import "./utils/vm.sol";
 
 contract PreservationTest is DSTest {
@@ -23,9 +23,13 @@ contract PreservationTest is DSTest {
         PreservationFactory preservationFactory = new PreservationFactory();
         ethernaut.registerLevel(preservationFactory);
         vm.startPrank(tx.origin);
-        address levelAddress = ethernaut.createLevelInstance(preservationFactory);
-        Preservation ethernautPreservation = Preservation(payable(levelAddress));
-        
+        address levelAddress = ethernaut.createLevelInstance(
+            preservationFactory
+        );
+        Preservation ethernautPreservation = Preservation(
+            payable(levelAddress)
+        );
+
         //////////////////
         // LEVEL ATTACK //
         //////////////////
@@ -37,13 +41,15 @@ contract PreservationTest is DSTest {
         PreservationHack preservationHack = new PreservationHack(levelAddress);
 
         // Run the attack
-        preservationHack.attack();  
+        preservationHack.attack();
 
         //////////////////////
         // LEVEL SUBMISSION //
-        //////////////////////   
+        //////////////////////
 
-        bool levelSuccessfullyPassed = ethernaut.submitLevelInstance(payable(levelAddress));
+        bool levelSuccessfullyPassed = ethernaut.submitLevelInstance(
+            payable(levelAddress)
+        );
         vm.stopPrank();
         assert(levelSuccessfullyPassed);
     }
