@@ -1,9 +1,9 @@
 pragma solidity ^0.8.10;
 
 import "ds-test/test.sol";
-import "../Telephone/TelephoneHack.sol";
-import "../Telephone/TelephoneFactory.sol";
-import "../Ethernaut.sol";
+import "../src/Telephone/TelephoneHack.sol";
+import "../src/Telephone/TelephoneFactory.sol";
+import "../src/Ethernaut.sol";
 import "./utils/vm.sol";
 
 contract TelephoneTest is DSTest {
@@ -16,7 +16,6 @@ contract TelephoneTest is DSTest {
     }
 
     function testTelephoneHack() public {
-
         /////////////////
         // LEVEL SETUP //
         /////////////////
@@ -26,7 +25,6 @@ contract TelephoneTest is DSTest {
         vm.startPrank(tx.origin);
         address levelAddress = ethernaut.createLevelInstance(telephoneFactory);
         Telephone ethernautTelephone = Telephone(payable(levelAddress));
-
 
         //////////////////
         // LEVEL ATTACK //
@@ -41,7 +39,9 @@ contract TelephoneTest is DSTest {
         // LEVEL SUBMISSION //
         //////////////////////
 
-        bool levelSuccessfullyPassed = ethernaut.submitLevelInstance(payable(levelAddress));
+        bool levelSuccessfullyPassed = ethernaut.submitLevelInstance(
+            payable(levelAddress)
+        );
         vm.stopPrank();
         assert(levelSuccessfullyPassed);
     }

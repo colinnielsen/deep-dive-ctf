@@ -1,11 +1,12 @@
 pragma solidity ^0.8.10;
 
 import "ds-test/test.sol";
-import "../Fallback/FallbackFactory.sol";
-import "../Ethernaut.sol";
+import "../src/King/KingHack.sol";
+import "../src/King/KingFactory.sol";
+import "../src/Ethernaut.sol";
 import "./utils/vm.sol";
 
-contract FallbackTest is DSTest {
+contract KingTest is DSTest {
     Vm vm = Vm(address(0x7109709ECfa91a80626fF3989D68f67F5b1DD12D));
     Ethernaut ethernaut;
     address eoaAddress = address(100);
@@ -17,33 +18,27 @@ contract FallbackTest is DSTest {
         vm.deal(eoaAddress, 5 ether);
     }
 
-    function testFallbackHack() public {
+    function testKingHack() public {
         /////////////////
         // LEVEL SETUP //
         /////////////////
 
-        FallbackFactory fallbackFactory = new FallbackFactory();
-        ethernaut.registerLevel(fallbackFactory);
+        KingFactory kingFactory = new KingFactory();
+        ethernaut.registerLevel(kingFactory);
         vm.startPrank(eoaAddress);
-        address levelAddress = ethernaut.createLevelInstance(fallbackFactory);
-        Fallback ethernautFallback = Fallback(payable(levelAddress));
+        address levelAddress = ethernaut.createLevelInstance{value: 1 ether}(
+            kingFactory
+        );
+        King ethernautKing = King(payable(levelAddress));
 
         //////////////////
         // LEVEL ATTACK //
         //////////////////
 
-        // 1. contribute()
-        // 2. fallback call
-        // 3. withdraw()
+        // Create KingHack Contract
+        KingHack kingHack = new KingHack(payable(levelAddress));
 
-        ethernautFallback.contribute{value: .0001 ether}();
-        bytes4 selector = bytes4(keccak256("aFunctionThatDoesntExist()"));
-        // emit log(string(selector));
-        address(ethernautFallback).call{value: 1 wei}(
-            abi.encodePacked(selector)
-        );
-        assertEq(ethernautFallback.owner(), eoaAddress, "NOT OWNER!");
-        ethernautFallback.withdraw();
+        //...
 
         //////////////////////
         // LEVEL SUBMISSION //
